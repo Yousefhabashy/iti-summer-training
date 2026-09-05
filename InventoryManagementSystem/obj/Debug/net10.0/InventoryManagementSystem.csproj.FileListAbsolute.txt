@@ -230,3 +230,4 @@ D:\Habashy\ITI Material\.NetG2\Gradiuation Project\InventoryManagementSystem\Inv
 D:\Habashy\ITI Material\.NetG2\Gradiuation Project\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\net10.0\InventoryManagementSystem.pdb
 D:\Habashy\ITI Material\.NetG2\Gradiuation Project\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\net10.0\InventoryManagementSystem.genruntimeconfig.cache
 D:\Habashy\ITI Material\.NetG2\Gradiuation Project\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\net10.0\ref\InventoryManagementSystem.dll
+D:\Habashy\ITI Material\.NetG2\Gradiuation Project\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\net10.0\InventoryManagementSystem.sourcelink.json

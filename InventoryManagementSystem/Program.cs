@@ -1,3 +1,4 @@
+using InventoryManagementSystem.Chatbot;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagementSystem
@@ -13,6 +14,15 @@ namespace InventoryManagementSystem
 
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
+
+            // Register InventoryQueryFunctions for dependency injection
+            builder.Services.AddScoped<InventoryQueryFunctions>();
+
+            // Register GeminiChatbotService for dependency injection
+            builder.Services.AddScoped<InventoryQueryFunctions>();
+            builder.Services.AddHttpClient<GeminiChatbotService>();
+
+
 
             var app = builder.Build();
 
