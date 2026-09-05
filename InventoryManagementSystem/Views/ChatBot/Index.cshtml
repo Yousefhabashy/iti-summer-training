@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Inventory Chatbot";
+}
+
+<h2>Ask the Inventory Chatbot</h2>
+
+<div id="chatLog" style="height:400px; overflow-y:auto; border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:6px;"></div>
+
+<div class="input-group">
+    <input type="text" id="messageInput" class="form-control" placeholder="e.g. What is the top selling product?" />
+    <button id="sendBtn" class="btn btn-primary">Send</button>
+</div>
+
+<script>
+    document.getElementById('sendBtn').addEventListener('click', sendMessage);
+    document.getElementById('messageInput').addEventListener('keypress', e => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    async function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const msg = input.value.trim();
+        if (!msg) return;
+
+        appendMessage('You', msg);
+        input.value = '';
+
+        const loadingId = appendMessage('Bot', 'Thinking...');
+
+        try {
+            const res = await fetch('/Chatbot/Ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'message=' + encodeURIComponent(msg)
+            });
+            const data = await res.json();
+            updateMessage(loadingId, data.reply);
+        } catch (err) {
+            updateMessage(loadingId, 'Error reaching the chatbot.');
+        }
+    }
+
+    let messageCounter = 0;
+    function appendMessage(sender, text) {
+        const log = document.getElementById('chatLog');
+        const id = 'msg-' + (messageCounter++);
+        log.innerHTML += `<p id="${id}"><strong>${sender}:</strong> <span>${text}</span></p>`;
+        log.scrollTop = log.scrollHeight;
+        return id;
+    }
+
+    function updateMessage(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.querySelector('span').textContent = text;
+    }
+</script>
