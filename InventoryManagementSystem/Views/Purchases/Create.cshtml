@@ -1,0 +1,136 @@
+@model InventoryManagementSystem.ViewModels.Purchases.PurchaseCreateVm
+
+@{
+    ViewData["Title"] = "New Purchase";
+}
+
+<div class="mb-4">
+    <h2 class="fw-bold mb-0">New Purchase</h2>
+    <p class="text-muted mb-0">Record a purchase from a supplier</p>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <form asp-action="Create" method="post" id="purchaseForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-4" style="max-width: 400px;">
+                <label asp-for="SupplierId" class="form-label fw-semibold">Supplier</label>
+                <select asp-for="SupplierId" asp-items="Model.Suppliers" class="form-select">
+                    <option value="">-- Select Supplier --</option>
+                </select>
+                <span asp-validation-for="SupplierId" class="text-danger"></span>
+            </div>
+
+            <h5 class="fw-semibold mb-3">Items</h5>
+
+            <div class="table-responsive mb-3">
+                <table class="table align-middle" id="itemsTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="min-width: 220px;">Product</th>
+                            <th style="width: 140px;">Quantity</th>
+                            <th style="width: 160px;">Unit Cost</th>
+                            <th style="width: 60px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsBody">
+                        @for (int i = 0; i < Model.Items.Count; i++)
+                        {
+                            <tr class="item-row">
+                                <td>
+                                    <select name="Items[@i].ProductId" class="form-select" required>
+                                        <option value="">-- Select Product --</option>
+                                        @foreach (var p in Model.Products)
+                                        {
+                                            <option value="@p.Value">@p.Text</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" name="Items[@i].Quantity" class="form-control" min="1" required />
+                                </td>
+                                <td>
+                                    <input type="number" name="Items[@i].UnitCost" class="form-control" min="0.01" step="0.01" required />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-danger btn-sm remove-row">&times;</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="button" id="addRowBtn" class="btn btn-outline-primary btn-sm mb-4">+ Add Item</button>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Save Purchase</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        (function () {
+            const productOptions = @Html.Raw(Json.Serialize(Model.Products));
+
+            function buildProductOptionsHtml() {
+                let html = '<option value="">-- Select Product --</option>';
+                productOptions.forEach(function (p) {
+                    html += `<option value="${p.value}">${p.text}</option>`;
+                });
+                return html;
+            }
+
+            function reindexRows() {
+                const rows = document.querySelectorAll('#itemsBody .item-row');
+                rows.forEach(function (row, index) {
+                    row.querySelectorAll('[name]').forEach(function (input) {
+                        input.name = input.name.replace(/Items\[\d+\]/, `Items[${index}]`);
+                    });
+                });
+            }
+
+            document.getElementById('addRowBtn').addEventListener('click', function () {
+                const tbody = document.getElementById('itemsBody');
+                const index = tbody.querySelectorAll('.item-row').length;
+
+                const row = document.createElement('tr');
+                row.className = 'item-row';
+                row.innerHTML = `
+                    <td>
+                        <select name="Items[${index}].ProductId" class="form-select" required>
+                            ${buildProductOptionsHtml()}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" name="Items[${index}].Quantity" class="form-control" min="1" required />
+                    </td>
+                    <td>
+                        <input type="number" name="Items[${index}].UnitCost" class="form-control" min="0.01" step="0.01" required />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger btn-sm remove-row">&times;</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('itemsBody').addEventListener('click', function (e) {
+                if (e.target.classList.contains('remove-row')) {
+                    const rows = document.querySelectorAll('#itemsBody .item-row');
+                    if (rows.length > 1) {
+                        e.target.closest('tr').remove();
+                        reindexRows();
+                    } else {
+                        alert('A purchase must include at least one item.');
+                    }
+                }
+            });
+        })();
+    </script>
+}
