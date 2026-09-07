@@ -32,6 +32,8 @@ namespace InventoryManagementSystem.Models
         [Range(0, int.MaxValue)]
         public int LowStockThreshold { get; set; } = 5;
 
+        // For soft delete functionality. 
+        public bool IsActive { get; set; } = true;
         public ICollection<PurchaseItem> PurchaseItems { get; set; } = new List<PurchaseItem>();
         public ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
     }

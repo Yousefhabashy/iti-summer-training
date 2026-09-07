@@ -8,4 +8,6 @@ public class ProductListVm
     public string? SearchTerm { get; set; }
     public int? CategoryFilter { get; set; }
     public string? StatusFilter { get; set; }
+
+    public bool ShowInactive { get; set; }
 }

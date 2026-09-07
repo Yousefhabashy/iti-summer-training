@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Habashy\\ITI Material\\.NetG2\\Gradiuation Project\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj": {}
+    "D:\\Habashy\\ITI Material\\.NetG2\\GP\\iti-summer-training\\InventoryManagementSystem\\InventoryManagementSystem.csproj": {}
   },
   "projects": {
-    "D:\\Habashy\\ITI Material\\.NetG2\\Gradiuation Project\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj": {
+    "D:\\Habashy\\ITI Material\\.NetG2\\GP\\iti-summer-training\\InventoryManagementSystem\\InventoryManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Habashy\\ITI Material\\.NetG2\\Gradiuation Project\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
+        "projectUniqueName": "D:\\Habashy\\ITI Material\\.NetG2\\GP\\iti-summer-training\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
         "projectName": "InventoryManagementSystem",
-        "projectPath": "D:\\Habashy\\ITI Material\\.NetG2\\Gradiuation Project\\InventoryManagementSystem\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
+        "projectPath": "D:\\Habashy\\ITI Material\\.NetG2\\GP\\iti-summer-training\\InventoryManagementSystem\\InventoryManagementSystem.csproj",
         "packagesPath": "C:\\Users\\ELGOHARY\\.nuget\\packages\\",
-        "outputPath": "D:\\Habashy\\ITI Material\\.NetG2\\Gradiuation Project\\InventoryManagementSystem\\InventoryManagementSystem\\obj\\",
+        "outputPath": "D:\\Habashy\\ITI Material\\.NetG2\\GP\\iti-summer-training\\InventoryManagementSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
