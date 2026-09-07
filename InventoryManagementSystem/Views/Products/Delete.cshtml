@@ -4,21 +4,11 @@
     ViewData["Title"] = "Delete Product";
 }
 
-<h2>Delete Product</h2>
+<div class="details-container" style="max-width:500px; margin:40px auto; text-align:center;">
+    <h4 class="mb-3">Are you sure you want to delete "@Model.ProductName"?</h4>
 
-<div class="alert alert-warning">Are you sure you want to delete this product?</div>
-
-<div class="card">
-    <div class="card-body">
-        <h4>@Model.ProductName</h4>
-        <p><strong>SKU:</strong> @Model.Sku</p>
-        <p><strong>Price:</strong> @Model.UnitPrice.ToString("C")</p>
-        <p><strong>Stock Quantity:</strong> @Model.StockQuantity</p>
-        <p><strong>Category:</strong> @Model.Category?.CategoryName</p>
-
-        <form asp-action="Delete" asp-route-id="@Model.ProductId" method="post">
-            <button type="submit" class="btn btn-danger">Yes, Delete</button>
-            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-        </form>
-    </div>
+    <form asp-action="Delete" asp-route-id="@Model.ProductId" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
 </div>

@@ -1,0 +1,101 @@
+﻿@model Category
+
+<style>
+    .form-container{
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .form-container .form-group{
+        margin-bottom: 20px;
+    }
+
+    .form-container label{
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-container .form-control{
+        border-radius: 8px;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        transition: all 0.2s;
+    }
+
+    .form-container .form-control:focus{
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+    }
+
+    .form-container textarea{
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .form-actions{
+        display: flex;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    .form-actions .btn{
+        padding: 10px 35px;
+        border-radius: 8px;
+        font-weight: 600;
+        min-width: 120px;
+    }
+
+    .btn-cancel{
+        background: #6c757d;
+        color: white;
+        border: none;
+    }
+
+    .btn-cancel:hover{
+        background: #5a6268;
+        color: white;
+    }
+
+    .btn-create{
+        background: #0d6efd;
+        color: white;
+        border: none;
+    }
+
+    .btn-create:hover{
+        background: #0b5ed7;
+        color: white;
+    }
+
+    .validation-summary{
+        background: #f8d7da;
+        border: 1px solid #f5c2c7;
+        border-radius: 8px;
+        padding: 12px 15px;
+        color: #842029;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="form-container">
+    <h2 class="text-center mb-4">Create New Category</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="CategoryName"> Category Name </label>
+            <input asp-for="CategoryName" class="form-control" placeholder="Enter category name" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description"> Description</label>
+            <textarea asp-for="Description" class="form-control" placeholder="Enter category description"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn btn-cancel"> Cancel</a>
+            <button type="submit" class="btn btn-create">Create </button>
+        </div>
+    </form>
+</div>

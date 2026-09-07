@@ -4,44 +4,140 @@
     ViewData["Title"] = "Product Details";
 }
 
-<h2>Product Details</h2>
+<style>
+    .details-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-<div class="card">
-    <div class="card-body">
-        <h4>@Model.ProductName</h4>
+    .details-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
 
-        <p><strong>Product ID:</strong> @Model.ProductId</p>
-        <p><strong>SKU:</strong> @Model.Sku</p>
-        <p><strong>Price:</strong> @Model.UnitPrice.ToString("C")</p>
-        <p><strong>Stock Quantity:</strong> @Model.StockQuantity</p>
-        <p><strong>Category:</strong> @Model.Category?.CategoryName</p>
-        <p><strong>Low Stock Threshold:</strong> @Model.LowStockThreshold</p>
-        <p>
-            <strong>Status:</strong>
-            @if (!Model.IsActive)
-            {
-                <span class="badge bg-secondary">Inactive</span>
-            }
-            else if (Model.StockQuantity == 0)
-            {
-                <span class="badge bg-danger">Out of Stock</span>
-            }
-            else if (Model.StockQuantity < Model.LowStockThreshold)
-            {
-                <span class="badge bg-warning text-dark">Low Stock</span>
-            }
-            else
-            {
-                <span class="badge bg-success">Available</span>
-            }
-        </p>
-
-        <br />
-        <a asp-action="Index" class="btn btn-secondary">Back</a>
-        <a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-primary">Edit</a>
-        @if (Model.IsActive)
-        {
-            <a asp-action="Delete" asp-route-id="@Model.ProductId" class="btn btn-danger">Delete</a>
+        .details-card .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
+
+            .details-card .detail-row:last-child {
+                border-bottom: none;
+            }
+
+        .details-card .label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .details-card .value {
+            color: #333;
+        }
+
+    .action-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 25px;
+    }
+
+        .action-buttons .btn {
+            padding: 10px 35px;
+            border-radius: 8px;
+            font-weight: 600;
+            min-width: 120px;
+        }
+
+    .btn-back {
+        background: #6c757d;
+        color: white;
+        border: none;
+    }
+
+        .btn-back:hover {
+            background: #5a6268;
+            color: white;
+        }
+
+    .btn-edit {
+        background: #0d6efd;
+        color: white;
+        border: none;
+    }
+
+        .btn-edit:hover {
+            background: #0b5ed7;
+            color: white;
+        }
+
+    .badge-status {
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+</style>
+
+<div class="details-container">
+    <h2 class="text-center mb-4">@Model.ProductName</h2>
+
+    <div class="details-card">
+        <div class="detail-row">
+            <span class="label">ID</span>
+            <span class="value">@Model.ProductId</span>
+        </div>
+        <div class="detail-row">
+            <span class="label">Product Name</span>
+            <span class="value">@Model.ProductName</span>
+        </div>
+        <div class="detail-row">
+            <span class="label">SKU</span>
+            <span class="value">@(string.IsNullOrEmpty(Model.Sku) ? "No SKU" : Model.Sku)</span>
+        </div>
+        <div class="detail-row">
+            <span class="label">Price</span>
+            <span class="value">@Model.UnitPrice.ToString("C")</span>
+        </div>
+        <div class="detail-row">
+            <span class="label">Quantity</span>
+            <span class="value">@Model.StockQuantity</span>
+        </div>
+        <div class="detail-row">
+            <span class="label">Category</span>
+            <span class="value">@Model.Category?.CategoryName</span>
+        </div>
+        <div class="detail-row">
+            <span class="label">Low Stock Threshold</span>
+            <span class="value">@Model.LowStockThreshold</span>
+        </div>
+        <div class="detail-row">
+            <span class="label">Status</span>
+            <span class="value">
+                @if (!Model.IsActive)
+                {
+                    <span class="badge-status bg-secondary text-white">Inactive</span>
+                }
+                else if (Model.StockQuantity == 0)
+                {
+                    <span class="badge-status bg-danger text-white">Out of Stock</span>
+                }
+                else if (Model.StockQuantity < Model.LowStockThreshold)
+                {
+                    <span class="badge-status bg-warning">Low Stock</span>
+                }
+                else
+                {
+                    <span class="badge-status bg-success text-white">Available</span>
+                }
+            </span>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <a asp-action="Index" class="btn btn-back">Back</a>
+        <a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-edit">Edit</a>
     </div>
 </div>

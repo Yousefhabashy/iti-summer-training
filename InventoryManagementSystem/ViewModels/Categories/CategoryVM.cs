@@ -14,4 +14,6 @@ public class CategoryVm
     public string? Description { get; set; }
 
     public int ProductCount { get; set; }
+
+    public bool HasProducts { get; set; }
 }
