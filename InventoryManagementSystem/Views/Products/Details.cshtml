@@ -1,0 +1,47 @@
+﻿@model InventoryManagementSystem.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h2>Product Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4>@Model.ProductName</h4>
+
+        <p><strong>Product ID:</strong> @Model.ProductId</p>
+        <p><strong>SKU:</strong> @Model.Sku</p>
+        <p><strong>Price:</strong> @Model.UnitPrice.ToString("C")</p>
+        <p><strong>Stock Quantity:</strong> @Model.StockQuantity</p>
+        <p><strong>Category:</strong> @Model.Category?.CategoryName</p>
+        <p><strong>Low Stock Threshold:</strong> @Model.LowStockThreshold</p>
+        <p>
+            <strong>Status:</strong>
+            @if (!Model.IsActive)
+            {
+                <span class="badge bg-secondary">Inactive</span>
+            }
+            else if (Model.StockQuantity == 0)
+            {
+                <span class="badge bg-danger">Out of Stock</span>
+            }
+            else if (Model.StockQuantity < Model.LowStockThreshold)
+            {
+                <span class="badge bg-warning text-dark">Low Stock</span>
+            }
+            else
+            {
+                <span class="badge bg-success">Available</span>
+            }
+        </p>
+
+        <br />
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+        <a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-primary">Edit</a>
+        @if (Model.IsActive)
+        {
+            <a asp-action="Delete" asp-route-id="@Model.ProductId" class="btn btn-danger">Delete</a>
+        }
+    </div>
+</div>
