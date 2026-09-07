@@ -1,0 +1,63 @@
+@model List<InventoryManagementSystem.Models.Purchase>
+
+@{
+    ViewData["Title"] = "Purchases";
+}
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <div>
+        <h2 class="fw-bold mb-0">Purchases</h2>
+        <p class="text-muted mb-0">Track incoming stock from suppliers</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">+ New Purchase</a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+            <h5 class="fw-semibold mb-2">No purchases found.</h5>
+            <p class="text-muted mb-4">Start by recording your first purchase.</p>
+            <a asp-action="Create" class="btn btn-primary">New Purchase</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Purchase Date</th>
+                        <th>Supplier</th>
+                        <th>Total Amount</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var purchase in Model)
+                    {
+                        <tr>
+                            <td>@purchase.PurchaseDate.ToString("dd MMM yyyy")</td>
+                            <td class="fw-semibold">@purchase.Supplier.SupplierName</td>
+                            <td>@purchase.TotalAmount.ToString("C")</td>
+                            <td class="text-end">
+                                <a asp-action="Details" asp-route-id="@purchase.PurchaseId"
+                                   class="btn btn-sm btn-outline-secondary">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

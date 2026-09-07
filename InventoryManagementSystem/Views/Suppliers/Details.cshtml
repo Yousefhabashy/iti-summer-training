@@ -1,0 +1,79 @@
+@model InventoryManagementSystem.ViewModels.Suppliers.SupplierVm
+
+@{
+    ViewData["Title"] = "Supplier Details";
+}
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <div>
+        <h2 class="fw-bold mb-0">@Model.SupplierName</h2>
+        <p class="text-muted mb-0">Supplier Details</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.SupplierId" class="btn btn-outline-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+        <h5 class="fw-semibold mb-3">Supplier Information</h5>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="text-muted small">Supplier Name</div>
+                <div class="fw-semibold">@Model.SupplierName</div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-muted small">Contact Name</div>
+                <div class="fw-semibold">@(Model.ContactName ?? "-")</div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-muted small">Phone</div>
+                <div class="fw-semibold">@(Model.Phone ?? "-")</div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-muted small">Email</div>
+                <div class="fw-semibold">@(Model.Email ?? "-")</div>
+            </div>
+            <div class="col-12">
+                <div class="text-muted small">Address</div>
+                <div class="fw-semibold">@(Model.Address ?? "-")</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <h5 class="fw-semibold mb-3">Supplied Products</h5>
+
+        @if (Model.SuppliedProducts == null || !Model.SuppliedProducts.Any())
+        {
+            <p class="text-muted mb-0">No products have been supplied by this supplier yet.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product Name</th>
+                            <th>SKU</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.SuppliedProducts)
+                        {
+                            <tr>
+                                <td>@product.ProductName</td>
+                                <td>@product.Sku</td>
+                                <td>@product.UnitPrice.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
