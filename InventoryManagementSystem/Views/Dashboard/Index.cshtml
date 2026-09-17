@@ -1,0 +1,384 @@
+﻿@model InventoryManagementSystem.ViewModels.Dashboard.DashboardVm
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <div>
+        <h2 class="fw-bold mb-0">Dashboard</h2>
+        <p class="text-muted mb-0">
+            Overview of your inventory, purchases and sales
+        </p>
+    </div>
+</div>
+
+<!-- Main Statistics -->
+<div class="row g-4 mb-4">
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small mb-2">
+                    Total Products
+                </div>
+
+                <h3 class="fw-bold mb-0">
+                    @Model.TotalProducts
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small mb-2">
+                    Total Categories
+                </div>
+
+                <h3 class="fw-bold mb-0">
+                    @Model.TotalCategories
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small mb-2">
+                    Total Suppliers
+                </div>
+
+                <h3 class="fw-bold mb-0">
+                    @Model.TotalSuppliers
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small mb-2">
+                    Total Stock Quantity
+                </div>
+
+                <h3 class="fw-bold mb-0">
+                    @Model.TotalStockQuantity
+                </h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Sales & Purchases -->
+<div class="row g-4 mb-4">
+
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+
+                <h5 class="fw-semibold mb-4">
+                    Sales
+                </h5>
+
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="text-muted small">
+                            Total Sales
+                        </div>
+
+                        <h4 class="fw-bold">
+                            @Model.TotalSalesCount
+                        </h4>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="text-muted small">
+                            Total Revenue
+                        </div>
+
+                        <h4 class="fw-bold">
+                            @Model.TotalSalesRevenue.ToString("C")
+                        </h4>
+                    </div>
+
+                </div>
+
+                <a asp-controller="Sales"
+                   asp-action="Index"
+                   class="btn btn-outline-primary btn-sm mt-3">
+                    View Sales
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+
+                <h5 class="fw-semibold mb-4">
+                    Purchases
+                </h5>
+
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="text-muted small">
+                            Total Purchases
+                        </div>
+
+                        <h4 class="fw-bold">
+                            @Model.TotalPurchasesCount
+                        </h4>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="text-muted small">
+                            Total Value
+                        </div>
+
+                        <h4 class="fw-bold">
+                            @Model.TotalPurchasesValue.ToString("C")
+                        </h4>
+                    </div>
+
+                </div>
+
+                <a asp-controller="Purchases"
+                   asp-action="Index"
+                   class="btn btn-outline-primary btn-sm mt-3">
+                    View Purchases
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Low Stock -->
+<div class="card border-0 shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <div>
+                <h5 class="fw-semibold mb-1">
+                    Low Stock Products
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Products that reached their low-stock threshold
+                </p>
+            </div>
+
+            <span class="badge bg-warning text-dark fs-6">
+                @Model.LowStockCount
+            </span>
+
+        </div>
+
+        @if (Model.LowStockProducts.Any())
+        {
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Current Stock</th>
+                            <th>Threshold</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var product in Model.LowStockProducts)
+                        {
+                            <tr>
+                                <td class="fw-semibold">
+                                    @product.ProductName
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-danger">
+                                        @product.StockQuantity
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @product.LowStockThreshold
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <div class="text-muted">
+                No products are currently low in stock.
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<!-- Recent Activity -->
+<div class="row g-4">
+
+    <div class="col-lg-7">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h5 class="fw-semibold mb-3">
+                    Recent Activity
+                </h5>
+
+                @if (Model.RecentActivity == null ||
+                     !Model.RecentActivity.Any())
+                {
+                    <p class="text-muted mb-0">
+                        No recent activity.
+                    </p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle mb-0">
+
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var activity in Model.RecentActivity)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @if (activity.Type == "Sale")
+                                            {
+                                                <span class="badge bg-success">
+                                                    Sale
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-primary">
+                                                    Purchase
+                                                </span>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @activity.Description
+                                        </td>
+
+                                        <td>
+                                            @activity.Date.ToString("dd MMM yyyy")
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Most Sold Products -->
+    <div class="col-lg-5">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h5 class="fw-semibold mb-3">
+                    Most Sold Products
+                </h5>
+
+                @if (Model.MostSoldProducts == null ||
+                     !Model.MostSoldProducts.Any())
+                {
+                    <p class="text-muted mb-0">
+                        No sales data available yet.
+                    </p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle mb-0">
+
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var product in Model.MostSoldProducts)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @product.ProductName
+                                        </td>
+
+                                        <td>
+                                            @product.QuantitySold
+                                        </td>
+
+                                        <td>
+                                            @product.Revenue.ToString("C")
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

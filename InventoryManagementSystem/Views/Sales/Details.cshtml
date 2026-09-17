@@ -1,0 +1,153 @@
+﻿@model InventoryManagementSystem.ViewModels.Sales.SaleDetailsVm
+
+@{
+    ViewData["Title"] = "Sale Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold mb-0">
+            Sale #@Model.SaleId
+        </h2>
+
+        <p class="text-muted mb-0">
+            Sale details and sold products
+        </p>
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+
+        Back to List
+
+    </a>
+
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+
+    <div class="card-body p-4">
+
+        <div class="row g-3">
+
+            <div class="col-md-4">
+
+                <div class="text-muted small">
+                    Customer
+                </div>
+
+                <div class="fw-semibold">
+
+                    @(string.IsNullOrWhiteSpace(Model.CustomerInfo)
+                        ? "Walk-in Customer"
+                        : Model.CustomerInfo)
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="text-muted small">
+                    Sale Date
+                </div>
+
+                <div class="fw-semibold">
+                    @Model.SaleDate.ToString("dd MMM yyyy")
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="text-muted small">
+                    Total Amount
+                </div>
+
+                <div class="fw-semibold">
+                    @Model.TotalAmount.ToString("C")
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm">
+
+    <div class="card-body p-4">
+
+        <h5 class="fw-semibold mb-3">
+            Sold Items
+        </h5>
+
+        @if (Model.Items == null || !Model.Items.Any())
+        {
+            <p class="text-muted mb-0">
+                No items recorded for this sale.
+            </p>
+        }
+        else
+        {
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Product</th>
+
+                            <th>Quantity</th>
+
+                            <th>Unit Price</th>
+
+                            <th>Subtotal</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.ProductName
+                                </td>
+
+                                <td>
+                                    @item.Quantity
+                                </td>
+
+                                <td>
+                                    @item.UnitPrice.ToString("C")
+                                </td>
+
+                                <td>
+                                    @(
+                                        (item.Quantity * item.UnitPrice)
+                                        .ToString("C")
+                                    )
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+
+</div>
