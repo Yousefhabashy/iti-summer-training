@@ -11,6 +11,7 @@ public class DashboardVm
     public decimal TotalPurchasesValue { get; set; }
     public int TotalSalesCount { get; set; }
     public decimal TotalSalesRevenue { get; set; }
+    public List<InventoryManagementSystem.Models.Product> LowStockProducts { get; set; } = new();
     public List<ActivityItem> RecentActivity { get; set; } = new();
     public List<TopProductItem> MostSoldProducts { get; set; } = new();
 }
